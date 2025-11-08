@@ -6,10 +6,10 @@
   "scripts": {
     "dev": "NODE_ENV=development concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
     "dev:vite": "vite",
-    "dev:electron": "tsc && electron dist/main.js",
+    "dev:electron": "tsc && NODE_ENV=development electron .",
     "build": "tsc && vite build",
     "build:electron": "electron-builder",
-    "start": "electron dist/main.js",
+    "start": "electron .",
     "compile": "tsc"
   },
   "keywords": [

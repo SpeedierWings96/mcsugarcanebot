@@ -4,13 +4,18 @@ import * as path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  root: path.join(__dirname, 'public'),
   base: './',
+  publicDir: 'public',
   build: {
     outDir: path.join(__dirname, 'dist-gui'),
     emptyOutDir: true,
   },
   server: {
     port: 5173,
+  },
+  resolve: {
+    alias: {
+      '@': path.join(__dirname, 'src'),
+    },
   },
 });
