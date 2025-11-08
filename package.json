@@ -1,0 +1,38 @@
+{
+  "name": "mcsugarcanebot",
+  "version": "1.0.0",
+  "description": "Sugar Cane Minecraft Bot",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "NODE_ENV=development concurrently \"npm run dev:vite\" \"npm run dev:electron\"",
+    "dev:vite": "vite",
+    "dev:electron": "tsc && electron dist/main.js",
+    "build": "tsc && vite build",
+    "build:electron": "electron-builder",
+    "start": "electron dist/main.js",
+    "compile": "tsc"
+  },
+  "keywords": [
+    "minecraft",
+    "bot",
+    "mineflayer"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^39.1.1",
+    "electron-builder": "^26.0.12",
+    "mineflayer": "^4.33.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.1.0",
+    "concurrently": "^9.2.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.2"
+  }
+}
