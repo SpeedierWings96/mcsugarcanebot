@@ -23,6 +23,7 @@
     "electron": "^39.1.1",
     "electron-builder": "^26.0.12",
     "mineflayer": "^4.33.0",
+    "mineflayer-pathfinder": "^2.4.5",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

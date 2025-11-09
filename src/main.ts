@@ -124,3 +124,35 @@ ipcMain.handle('sessions:clear', async () => {
   sessionStorage.clearAllSessions();
   return { success: true };
 });
+
+ipcMain.handle('bot:startFarming', async () => {
+  if (bot && bot.isConnected()) {
+    bot.startSugarcaneFarming();
+    return { success: true };
+  }
+  return { success: false, error: 'Bot is not connected' };
+});
+
+ipcMain.handle('bot:stopFarming', async () => {
+  if (bot && bot.isConnected()) {
+    bot.stopSugarcaneFarming();
+    return { success: true };
+  }
+  return { success: false, error: 'Bot is not connected' };
+});
+
+ipcMain.handle('bot:setBasePosition', async () => {
+  if (bot && bot.isConnected()) {
+    bot.setBasePosition();
+    return { success: true };
+  }
+  return { success: false, error: 'Bot is not connected' };
+});
+
+ipcMain.handle('bot:resetSugarcaneCount', async () => {
+  if (bot && bot.isConnected()) {
+    bot.resetSugarcaneCount();
+    return { success: true };
+  }
+  return { success: false, error: 'Bot is not connected' };
+});

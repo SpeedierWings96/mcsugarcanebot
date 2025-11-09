@@ -17,6 +17,8 @@ interface BotStatus {
   position?: { x: number; y: number; z: number };
   gameMode?: string;
   dimension?: string;
+  farmingActive?: boolean;
+  sugarcaneCollected?: number;
 }
 
 interface Session {
@@ -34,6 +36,10 @@ declare global {
         disconnect: () => Promise<{ success: boolean }>;
         sendChat: (message: string) => Promise<{ success: boolean; error?: string }>;
         getStatus: () => Promise<BotStatus>;
+        startFarming: () => Promise<{ success: boolean; error?: string }>;
+        stopFarming: () => Promise<{ success: boolean; error?: string }>;
+        setBasePosition: () => Promise<{ success: boolean; error?: string }>;
+        resetSugarcaneCount: () => Promise<{ success: boolean; error?: string }>;
         onMessage: (callback: (message: string) => void) => void;
         onError: (callback: (error: string) => void) => void;
         onStatus: (callback: (status: BotStatus) => void) => void;
@@ -147,6 +153,42 @@ function App() {
     loadSessions();
   };
 
+  const handleStartFarming = async () => {
+    const result = await window.electronAPI.bot.startFarming();
+    if (result.success) {
+      setMessages((prev) => [...prev, '[INFO] Started sugarcane farming']);
+    } else {
+      setMessages((prev) => [...prev, `[ERROR] ${result.error}`]);
+    }
+  };
+
+  const handleStopFarming = async () => {
+    const result = await window.electronAPI.bot.stopFarming();
+    if (result.success) {
+      setMessages((prev) => [...prev, '[INFO] Stopped sugarcane farming']);
+    } else {
+      setMessages((prev) => [...prev, `[ERROR] ${result.error}`]);
+    }
+  };
+
+  const handleSetBasePosition = async () => {
+    const result = await window.electronAPI.bot.setBasePosition();
+    if (result.success) {
+      setMessages((prev) => [...prev, '[INFO] Base position set']);
+    } else {
+      setMessages((prev) => [...prev, `[ERROR] ${result.error}`]);
+    }
+  };
+
+  const handleResetSugarcaneCount = async () => {
+    const result = await window.electronAPI.bot.resetSugarcaneCount();
+    if (result.success) {
+      setMessages((prev) => [...prev, '[INFO] Sugarcane count reset']);
+    } else {
+      setMessages((prev) => [...prev, `[ERROR] ${result.error}`]);
+    }
+  };
+
   return (
     <div className="app">
       <div className="header">
@@ -256,6 +298,39 @@ function App() {
                     </span>
                   </div>
                 )}
+              </div>
+            </div>
+          )}
+
+          {status.connected && (
+            <div className="farming-controls">
+              <h2>Sugarcane Farming</h2>
+              <div className="status-grid">
+                <div className="status-item">
+                  <span className="label">Status:</span>
+                  <span className="value">{status.farmingActive ? 'Active' : 'Inactive'}</span>
+                </div>
+                <div className="status-item">
+                  <span className="label">Collected:</span>
+                  <span className="value">{status.sugarcaneCollected ?? 0}</span>
+                </div>
+              </div>
+              <div className="button-group">
+                <button onClick={handleSetBasePosition} className="btn-primary">
+                  Set Base Position
+                </button>
+                {!status.farmingActive ? (
+                  <button onClick={handleStartFarming} className="btn-primary">
+                    Start Farming
+                  </button>
+                ) : (
+                  <button onClick={handleStopFarming} className="btn-danger">
+                    Stop Farming
+                  </button>
+                )}
+                <button onClick={handleResetSugarcaneCount} className="btn-primary">
+                  Reset Count
+                </button>
               </div>
             </div>
           )}
