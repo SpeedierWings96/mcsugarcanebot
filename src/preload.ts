@@ -8,6 +8,10 @@ contextBridge.exposeInMainWorld('electronAPI', {
     disconnect: () => ipcRenderer.invoke('bot:disconnect'),
     sendChat: (message: string) => ipcRenderer.invoke('bot:sendChat', message),
     getStatus: () => ipcRenderer.invoke('bot:getStatus'),
+    startFarming: () => ipcRenderer.invoke('bot:startFarming'),
+    stopFarming: () => ipcRenderer.invoke('bot:stopFarming'),
+    setBasePosition: () => ipcRenderer.invoke('bot:setBasePosition'),
+    resetSugarcaneCount: () => ipcRenderer.invoke('bot:resetSugarcaneCount'),
     onMessage: (callback: (message: string) => void) => {
       ipcRenderer.on('bot:message', (_event, message) => callback(message));
     },
